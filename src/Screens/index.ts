@@ -1,3 +1,3 @@
-import Navigation from './UsersList/UsersList'
+import UsersList from './UsersList/UsersList'
 
-export {Navigation}
+export {UsersList}
