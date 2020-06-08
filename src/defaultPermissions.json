@@ -1,0 +1,36 @@
+{
+  "permissionsGroups":[
+    {
+      "id":1,
+      "permissionGroupName":"Permission group 1",
+      "permissions":[
+        {
+          "id":1,
+          "permission":"Permission 11",
+          "enabled":true
+        },
+        {
+          "id":2,
+          "permission":"Permission 12",
+          "enabled":true
+        }
+      ]
+    },
+    {
+      "id":2,
+      "permissionGroupName":"Permission group 2",
+      "permissions":[
+        {
+          "id":3,
+          "permission":"Permission 11",
+          "enabled":true
+        },
+        {
+          "id":4,
+          "permission":"Permission 12",
+          "enabled":true
+        }
+      ]
+    }
+  ]
+}

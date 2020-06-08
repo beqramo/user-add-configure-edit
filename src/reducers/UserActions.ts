@@ -1,5 +1,12 @@
 import {data} from '../users.json'
-import {User, ModalEnum} from '../@types/index.d'
+import {v4 as uuidv4} from 'uuid'
+import defaultPermissions from '../defaultPermissions.json'
+import {
+  User,
+  ModalEnum,
+  AddUserFormData,
+  UpdateUserFormData,
+} from '../@types/index.d'
 
 export enum UserActions {
   LOAD_USERS,
@@ -7,6 +14,7 @@ export enum UserActions {
   DISABLE_USER,
   ADD_USER,
   SHOW_MODAL,
+  UPDATE_USER,
 }
 type LoadActionUsers = {
   type: UserActions.LOAD_USERS
@@ -22,25 +30,25 @@ export const loadUsersAction = (): LoadActionUsers => {
 
 type DeleteActionUser = {
   type: UserActions.DELETE_USER
-  payload: number
+  payload: string
 }
 
-export const deleteUserAction = (index: number): DeleteActionUser => {
+export const deleteUserAction = (id: string): DeleteActionUser => {
   return {
     type: UserActions.DELETE_USER,
-    payload: index,
+    payload: id,
   }
 }
 
 type DisableUser = {
   type: UserActions.DISABLE_USER
-  payload: number
+  payload: string
 }
 
-export const disableUserAction = (index: number): DisableUser => {
+export const disableUserAction = (id: string): DisableUser => {
   return {
     type: UserActions.DISABLE_USER,
-    payload: index,
+    payload: id,
   }
 }
 
@@ -49,7 +57,17 @@ type AddUser = {
   payload: User
 }
 
-export const addUserAction = (user: User): AddUser => {
+export const addUserAction = ({
+  admin,
+  ...formData
+}: AddUserFormData): AddUser => {
+  let user: User = {
+    id: uuidv4(),
+    ...formData,
+    ...defaultPermissions,
+    active: true,
+    admin: !!admin,
+  }
   return {
     type: UserActions.ADD_USER,
     payload: user,
@@ -66,6 +84,23 @@ export const toggleModal = (
 ): ToggleModal => {
   return {
     type: UserActions.SHOW_MODAL,
+    payload,
+  }
+}
+type UpdateUser = {
+  type: UserActions.UPDATE_USER
+  payload: {
+    id: string
+    data: UpdateUserFormData
+  }
+}
+
+export const updateUserAction = (payload: {
+  id: string
+  data: UpdateUserFormData
+}): UpdateUser => {
+  return {
+    type: UserActions.UPDATE_USER,
     payload,
   }
 }

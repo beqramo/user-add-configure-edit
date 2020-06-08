@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow'
 
 import EnhancedTableHead from './components/EnhancedTableHead'
 
-import {User, ModalEnum} from '../../@types/index.d'
+import {User, ModalEnum, AddUserFormData} from '../../@types/index.d'
 import {AppContext} from 'App'
 import styled from 'styled-components'
 import EnhancedTableRow from './components/EnhancedTableRow'
@@ -16,6 +16,7 @@ import {
   deleteUserAction,
   disableUserAction,
   toggleModal,
+  addUserAction,
 } from 'reducers/UserActions'
 import {useHistory} from 'react-router-dom'
 import {Modal} from '@material-ui/core'
@@ -71,7 +72,7 @@ export default function EnhancedTable() {
 
   const navigateToDetail = useCallback(
     (id: number) => {
-      history.push('/user-detail', {userId: id})
+      history.push({pathname: `/user-detail/${id}`})
     },
     [history],
   )
@@ -103,19 +104,26 @@ export default function EnhancedTable() {
   )
 
   const deleteUser = useCallback(
-    (index) => {
-      dispatch(deleteUserAction(index))
+    (id: string) => {
+      dispatch(deleteUserAction(id))
     },
     [dispatch],
   )
 
   const onStatusChange = useCallback(
-    (index: number) => dispatch(disableUserAction(index)),
+    (id: string) => dispatch(disableUserAction(id)),
     [dispatch],
   )
   const onModalClose = useCallback(() => {
     dispatch(toggleModal())
   }, [dispatch])
+
+  const onAddUser = useCallback(
+    (data: AddUserFormData) => {
+      dispatch(addUserAction(data))
+    },
+    [dispatch],
+  )
 
   return (
     <MainDiv>
@@ -137,9 +145,9 @@ export default function EnhancedTable() {
                 <EnhancedTableRow
                   {...(row as any)}
                   key={row.id}
-                  onDelete={deleteUser.bind(EnhancedTable, index)}
-                  onDetail={navigateToDetail.bind(EnhancedTable, row.id)}
-                  onStatusChange={onStatusChange.bind(EnhancedTable, index)}
+                  onDelete={deleteUser}
+                  onDetail={navigateToDetail}
+                  onStatusChange={onStatusChange}
                 />
               ))}
             {emptyRows > 0 && (
@@ -160,7 +168,7 @@ export default function EnhancedTable() {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       <Modal open={modalType === ModalEnum.addUser} onClose={onModalClose}>
-        <AddUserForm />
+        <AddUserForm onAddUser={onAddUser} />
       </Modal>
     </MainDiv>
   )

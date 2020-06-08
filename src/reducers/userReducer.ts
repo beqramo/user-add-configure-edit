@@ -17,9 +17,10 @@ function userReducer(
         users: payload,
       }
     case UserActions.DELETE_USER: {
+      const index = state.users.findIndex((val) => val.id === payload)
       const users = state.users
-        .slice(0, payload)
-        .concat(state.users.slice(payload + 1, state.users.length))
+        .slice(0, index)
+        .concat(state.users.slice(index + 1, state.users.length))
       return {
         ...state,
         users,
@@ -27,9 +28,11 @@ function userReducer(
     }
 
     case UserActions.DISABLE_USER: {
+      const index = state.users.findIndex((val) => val.id === payload)
+
       const users = [...state.users]
 
-      users[payload].active = !users[payload].active
+      users[index].active = !users[index].active
       return {
         ...state,
         users,
@@ -39,6 +42,23 @@ function userReducer(
       return {
         ...state,
         modalType: payload,
+      }
+    }
+    case UserActions.ADD_USER: {
+      return {
+        ...state,
+        users: [payload, ...state.users],
+        modalType: ModalEnum.none,
+      }
+    }
+    case UserActions.UPDATE_USER: {
+      const index = state.users.findIndex((val) => val.id === payload.id)
+      const users = [...state.users]
+
+      users[index] = {...users[index], ...payload.data, admin: !!payload.admin}
+      return {
+        ...state,
+        users,
       }
     }
 

@@ -11,9 +11,9 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import styled from 'styled-components'
 
 import './App.css'
-import {UsersList} from 'Screens'
+import {UsersList, UserDetail} from 'Screens'
 import {Header} from 'Components'
-import {Grid, CssBaseline, CircularProgress} from '@material-ui/core'
+import {Grid, CssBaseline, CircularProgress, Box} from '@material-ui/core'
 import userReducer, {initialState} from 'reducers/userReducer'
 import {loadUsersAction, UserAction} from 'reducers/UserActions'
 import {AppState} from './@types/index.d'
@@ -47,19 +47,19 @@ function App(): ReactElement {
         <CssBaseline />
         <AppContextProvider value={{state, dispatch}}>
           <Router>
-            <Grid container>
+            <Grid container style={{height: '100%'}}>
               <Grid item xs={12}>
                 <Header />
               </Grid>
-              <Grid container xs={12} item>
+              <Grid container xs={12} item style={{height: '100%'}}>
                 <Grid xs={1} item />
                 <Grid item xs={10}>
                   <Switch>
                     <Route exact path={'/'}>
                       <UsersList />
                     </Route>
-                    <Route path={`user-detail/:userId`}>
-                      <h3>Please select a topic.</h3>
+                    <Route path={`/user-detail/:userId`}>
+                      <UserDetail />
                     </Route>
                   </Switch>
                 </Grid>

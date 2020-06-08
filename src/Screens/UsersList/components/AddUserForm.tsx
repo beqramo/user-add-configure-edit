@@ -11,14 +11,8 @@ import {
 } from '@material-ui/core'
 import {useForm, Controller} from 'react-hook-form'
 import styled from 'styled-components'
-
-type FormData = {
-  firstName: string
-  lastName: string
-  email: string
-  role: string
-}
-
+import {validator} from 'utils'
+import {AddUserFormData} from '@types'
 const StyledPaper = styled(Paper)`
   padding: 4rem;
   top: 50%;
@@ -41,16 +35,17 @@ const EnhancedTextField = styled(TextField)`
     margin: 1rem 0;
   }
 `
-
-const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w+)+$/
-
-const AddUserForm = (): React.ReactElement => {
-  const {handleSubmit, errors, control, formState} = useForm<FormData>({
+type AddUserFormPropType = {
+  onAddUser: (data: AddUserFormData) => void
+}
+const AddUserForm = ({onAddUser}: AddUserFormPropType): React.ReactElement => {
+  const {handleSubmit, errors, control, formState} = useForm<AddUserFormData>({
     reValidateMode: 'onChange',
+    submitFocusError: true,
+    validateCriteriaMode: 'all',
+    mode: 'onChange',
   })
-  console.log(errors, 'errors')
 
-  const addUser = ({firstName, lastName, email}: FormData) => {}
   return (
     <StyledPaper>
       <Typography>Invite New User</Typography>
@@ -61,11 +56,11 @@ const AddUserForm = (): React.ReactElement => {
               as={EnhancedTextField}
               control={control}
               defaultValue=""
-              name={'firstName'}
+              name={'name'}
               label="* First Name"
               rules={{required: 'required'}}
-              error={!!errors['firstName']}
-              helperText={errors['firstName']?.message}
+              error={!!errors['name']}
+              helperText={errors['name']?.message}
             />
           </Grid>
           <Grid item>
@@ -73,10 +68,10 @@ const AddUserForm = (): React.ReactElement => {
               as={EnhancedTextField}
               defaultValue=""
               control={control}
-              name={'lastName'}
+              name={'surname'}
               label="* Last Name"
-              error={!!errors['lastName']}
-              helperText={errors['lastName']?.message}
+              error={!!errors['surname']}
+              helperText={errors['surname']?.message}
               rules={{required: 'required'}}
             />
           </Grid>
@@ -91,10 +86,7 @@ const AddUserForm = (): React.ReactElement => {
           helperText={errors['email']?.message}
           rules={{
             required: 'required',
-            validate: {
-              ifNotEmpty: (value: string | undefined) =>
-                !value || emailRegex.test(value ?? '') || 'Not Corect Format',
-            },
+            validate: validator.emailValidator,
           }}
         />
         <Grid container direction={'row'} spacing={8}>
@@ -102,16 +94,16 @@ const AddUserForm = (): React.ReactElement => {
             <Controller
               as={(props) => (
                 <Select {...props}>
-                  <MenuItem value={'admin'}>admin</MenuItem>
-                  <MenuItem value={'user'}>user</MenuItem>
+                  <MenuItem value={1}>admin</MenuItem>
+                  <MenuItem value={0}>user</MenuItem>
                 </Select>
               )}
-              defaultValue={'admin'}
+              defaultValue={1}
               control={control}
-              name={'role'}
+              name={'admin'}
               label="* role"
-              error={!!errors['role']}
-              helperText={errors['role']?.message}
+              error={!!errors['admin']}
+              helperText={errors['admin']?.message}
               rules={{required: 'required'}}
             />
           </Grid>
@@ -126,12 +118,11 @@ const AddUserForm = (): React.ReactElement => {
           alignItems="center"
         >
           <StyledButton
-            type={'submit'}
             variant={'contained'}
-            onSubmit={handleSubmit(addUser)}
-            onClick={handleSubmit(addUser)}
+            onClick={handleSubmit(onAddUser)}
             color={'primary'}
             size={'medium'}
+            disabled={!formState.isValid}
           >
             send Invitation
           </StyledButton>

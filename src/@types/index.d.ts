@@ -1,5 +1,5 @@
 export type User = {
-  id: number
+  id: string
   name: string
   surname: string
   email: string
@@ -41,3 +41,12 @@ export type TableData = {
   admin: boolean
   active: boolean
 }
+
+export type AddUserFormData = {
+  name: string
+  surname: string
+  email: string
+  admin: number
+}
+
+export type UpdateUserFormData = Omit<AddUserFormData, 'email'>

@@ -1,10 +1,10 @@
 import React, {ReactElement} from 'react'
-import {TableCell, TableRow, TableRowTypeMap} from '@material-ui/core'
+import {TableCell, TableRow} from '@material-ui/core'
 import {Grid, IconButton, Typography} from '@material-ui/core'
 import {VpnKey, Settings, Delete} from '@material-ui/icons'
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded'
 
-import styled, {ThemedStyledProps} from 'styled-components'
+import styled from 'styled-components'
 
 import {BaseSwitch} from 'Components'
 import {User} from '@types'
@@ -32,12 +32,13 @@ const KeyIconContainer = styled.div<{isActive?: boolean}>`
   margin-right: 1.3rem;
 `
 interface EnhancedTableRowType extends User {
-  onDelete: () => {}
-  onDetail: () => {}
-  onStatusChange: () => {}
+  onDelete: (id: string) => {}
+  onDetail: (id: string) => {}
+  onStatusChange: (id: string) => {}
 }
 
 const EnhancedTableRow = ({
+  id,
   name,
   surname,
   email,
@@ -76,14 +77,20 @@ const EnhancedTableRow = ({
         )}
       </TableCell>
       <TableCell align="right">
-        <BaseSwitch checked={active} onChange={onStatusChange} />
+        <BaseSwitch
+          checked={active}
+          onChange={onStatusChange.bind(EnhancedTableRow, id)}
+        />
       </TableCell>
       <TableCell align="right" padding={'none'}>
         <Grid container direction={'row'} justify={'flex-end'}>
-          <StyledIconButton onClick={onDetail} isActive={active}>
+          <StyledIconButton
+            onClick={onDetail.bind(EnhancedTableRow, id)}
+            isActive={active}
+          >
             <Settings />
           </StyledIconButton>
-          <IconButton onClick={onDelete}>
+          <IconButton onClick={onDelete.bind(EnhancedTableRow, id)}>
             <Delete />
           </IconButton>
         </Grid>
