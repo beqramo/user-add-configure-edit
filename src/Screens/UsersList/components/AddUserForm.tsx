@@ -11,8 +11,10 @@ import {
 } from '@material-ui/core'
 import {useForm, Controller} from 'react-hook-form'
 import styled from 'styled-components'
-import {validator} from 'utils'
+
 import {AddUserFormData} from '@types'
+
+import {validator} from 'utils'
 const StyledPaper = styled(Paper)`
   padding: 4rem;
   top: 50%;

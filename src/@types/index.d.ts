@@ -5,6 +5,7 @@ export type User = {
   email: string
   admin: boolean
   active: boolean
+  superAdmin: boolean
   permissionsGroups: PermissionsGroup[]
 }
 
@@ -12,6 +13,7 @@ export type PermissionsGroup = {
   id: number
   permissionGroupName: string
   permissions: Permission[]
+  enabled: boolean
 }
 
 export type Permission = {
@@ -23,6 +25,7 @@ export type Permission = {
 export type AppState = {
   users: User[]
   modalType: ModalEnum
+  searchText: string
 }
 
 export enum ModalEnum {

@@ -1,6 +1,9 @@
 import React, {ReactElement} from 'react'
 
-import {Grid, Button, Typography} from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import styled from 'styled-components'
 import {User} from '@types'
@@ -45,24 +48,36 @@ const UserInfoColumn = ({user}: {user: User | undefined}): ReactElement => {
         direction={'column'}
       >
         <AvatarUploadTitle>upload a photo</AvatarUploadTitle>
-
-        <Typography variant={'h3'} noWrap={false}>
-          {user?.name}
-        </Typography>
-        <Typography variant={'h3'} noWrap={false}>
-          {user?.surname}
-        </Typography>
-        <Typography variant={'body2'} noWrap={false} style={{margin: '2rem 0'}}>
-          {user?.email}
-        </Typography>
-
-        <StyledButton
-          variant={'contained'}
-          color="primary"
-          backgroundColor={'#7E7EF1'}
+        <div
+          style={{
+            opacity: user?.active ? 1 : 0.4,
+            pointerEvents: user?.active ? 'auto' : 'none',
+          }}
         >
-          Resend the invite
-        </StyledButton>
+          <Typography variant={'h3'} noWrap={false}>
+            {user?.name}
+          </Typography>
+          <Typography variant={'h3'} noWrap={false}>
+            {user?.surname}
+          </Typography>
+          <Typography
+            variant={'body2'}
+            noWrap={false}
+            style={{margin: '2rem 0'}}
+          >
+            {user?.email}
+          </Typography>
+        </div>
+
+        {user?.active && (
+          <StyledButton
+            variant={'contained'}
+            color="primary"
+            backgroundColor={'#7E7EF1'}
+          >
+            Resend the invite
+          </StyledButton>
+        )}
       </Grid>
     </>
   )

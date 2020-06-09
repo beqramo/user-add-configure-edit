@@ -5,18 +5,26 @@ import React, {
   useCallback,
   useContext,
 } from 'react'
-import {useLocation} from 'react-router-dom'
-import {Grid, Typography, Input, InputAdornment, Fab} from '@material-ui/core'
-import {Add, Search} from '@material-ui/icons'
+
+import Grid from '@material-ui/core/Grid'
+import Input from '@material-ui/core/Input'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Fab from '@material-ui/core/Fab'
+
+import Add from '@material-ui/icons/Add'
+import Search from '@material-ui/icons/Search'
 import Settings from '@material-ui/icons/Settings'
-import {AppContext} from 'App'
-import {toggleModal} from 'reducers/UserActions'
+import {useLocation} from 'react-router-dom'
+
 import {ModalEnum} from '../../@types/index.d'
+
+import {AppContext} from 'App'
+import {toggleModal, searchTextChange} from 'reducers/UserActions'
 
 import styled from 'styled-components'
 
 const StyledGridContainer = styled(Grid)`
-  height: 211px;
+  height: 100%;
   width: 100%;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
@@ -51,7 +59,7 @@ enum ActiveScreen {
 const UsersList = (): ReactElement => {
   const location = useLocation()
   const [header, setHeader] = useState<ActiveScreen>(ActiveScreen.userList)
-  const {state, dispatch} = useContext(AppContext)
+  const {dispatch} = useContext(AppContext)
 
   useEffect(() => {
     console.log(location.pathname)
@@ -64,6 +72,12 @@ const UsersList = (): ReactElement => {
     dispatch(toggleModal(ModalEnum.addUser))
   }, [dispatch])
 
+  const onTextChange = useCallback(
+    (event) => {
+      dispatch(searchTextChange(event.target.value))
+    },
+    [dispatch],
+  )
   return (
     <StyledGridContainer container>
       <Grid item xs={1}></Grid>
@@ -86,6 +100,7 @@ const UsersList = (): ReactElement => {
                 <Search htmlColor={'#000000'} />
               </InputAdornment>
             }
+            onChange={onTextChange}
           />
         )}
 

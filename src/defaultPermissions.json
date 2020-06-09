@@ -1,8 +1,10 @@
 {
+  "superAdmin":false,
   "permissionsGroups":[
     {
       "id":1,
       "permissionGroupName":"Permission group 1",
+      "enabled":true,
       "permissions":[
         {
           "id":1,
@@ -12,13 +14,14 @@
         {
           "id":2,
           "permission":"Permission 12",
-          "enabled":true
+          "enabled":false
         }
       ]
     },
     {
       "id":2,
       "permissionGroupName":"Permission group 2",
+      "enabled":false,
       "permissions":[
         {
           "id":3,
@@ -28,7 +31,7 @@
         {
           "id":4,
           "permission":"Permission 12",
-          "enabled":true
+          "enabled":false
         }
       ]
     }

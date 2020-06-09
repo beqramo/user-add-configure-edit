@@ -1,21 +1,19 @@
 import React, {ReactElement} from 'react'
 
-import {
-  Grid,
-  Button,
-  Typography,
-  FormGroup,
-  TextField,
-  MenuItem,
-  Select,
-  Box,
-  InputLabel,
-} from '@material-ui/core'
+import InputLabel from '@material-ui/core/InputLabel'
+import Box from '@material-ui/core/Box'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import FormGroup from '@material-ui/core/FormGroup'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+
 import styled from 'styled-components'
 import {User, UpdateUserFormData} from '@types'
 
 import {useForm, Controller} from 'react-hook-form'
-import {validator} from 'utils'
 import {BaseSwitch} from 'Components'
 
 const StyledButton = styled(Button)<{backgroundColor: string}>`
@@ -91,7 +89,13 @@ const UserDetailChangeColumn = ({
             {user.active ? 'Active' : 'Disabled'}
           </Typography>
         </Grid>
-        <Grid xs={10}>
+        <Grid
+          xs={10}
+          style={{
+            opacity: user?.active ? 1 : 0.4,
+            pointerEvents: user?.active ? 'auto' : 'none',
+          }}
+        >
           <FormGroup>
             <Grid container spacing={2} justify="flex-start">
               <Controller
@@ -138,15 +142,17 @@ const UserDetailChangeColumn = ({
               item
               xs={8}
             >
-              <StyledButton
-                variant={'contained'}
-                onClick={handleSubmit(onUserUpdate(user.id))}
-                backgroundColor={'#44A0D3'}
-                color="primary"
-                disabled={!formState.isValid}
-              >
-                send Invitation
-              </StyledButton>
+              {user.active && (
+                <StyledButton
+                  variant={'contained'}
+                  onClick={handleSubmit(onUserUpdate(user.id))}
+                  backgroundColor={'#44A0D3'}
+                  color="primary"
+                  disabled={!formState.isValid}
+                >
+                  send Invitation
+                </StyledButton>
+              )}
             </Grid>
           </FormGroup>
         </Grid>

@@ -7,10 +7,12 @@
       "email":"bekaafd@sdf.cod",
       "admin":true,
       "active":true,
+      "superAdmin":false,
       "permissionsGroups":[
         {
           "id":1,
           "permissionGroupName":"Permission group 1",
+          "enabled":true,
           "permissions":[
             {
               "id":1,
@@ -27,6 +29,7 @@
         {
           "id":2,
           "permissionGroupName":"Permission group 2",
+          "enabled":false,
           "permissions":[
             {
               "id":3,
@@ -49,10 +52,12 @@
       "email":"bekaafd@sdf.cod",
       "admin":false,
       "active":true,
+      "superAdmin":false,
       "permissionsGroups":[
         {
           "id":1,
           "permissionGroupName":"Permission group 1",
+          "enabled":true,
           "permissions":[
             {
               "id":1,
@@ -69,48 +74,7 @@
         {
           "id":2,
           "permissionGroupName":"Permission group 2",
-          "permissions":[
-            {
-              "id":3,
-              "permission":"Permission 11",
-              "enabled":true
-            },
-            {
-              "id":4,
-              "permission":"Permission 12",
-              "enabled":false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id":"2awdawd3",
-      "name":"beqa 3",
-      "surname":"kokhodze",
-      "email":"bekaafd@sdf.cod",
-      "admin":true,
-      "active":false,
-      "permissionsGroups":[
-        {
-          "id":1,
-          "permissionGroupName":"Permission group 1",
-          "permissions":[
-            {
-              "id":1,
-              "permission":"Permission 11",
-              "enabled":true
-            },
-            {
-              "id":2,
-              "permission":"Permission 12",
-              "enabled":false
-            }
-          ]
-        },
-        {
-          "id":2,
-          "permissionGroupName":"Permission group 2",
+          "enabled":true,
           "permissions":[
             {
               "id":3,

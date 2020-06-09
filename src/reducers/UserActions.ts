@@ -1,5 +1,7 @@
 import {data} from '../users.json'
 import {v4 as uuidv4} from 'uuid'
+import {get} from 'local-storage'
+
 import defaultPermissions from '../defaultPermissions.json'
 import {
   User,
@@ -15,6 +17,9 @@ export enum UserActions {
   ADD_USER,
   SHOW_MODAL,
   UPDATE_USER,
+  PERMISSION_CHANGE,
+  SUPER_ADMIN_CHANGE,
+  SEARCH_TEXT_CHANGE,
 }
 type LoadActionUsers = {
   type: UserActions.LOAD_USERS
@@ -22,9 +27,11 @@ type LoadActionUsers = {
 }
 
 export const loadUsersAction = (): LoadActionUsers => {
+  let users: User[] = JSON.parse(get('users')) ?? []
   return {
     type: UserActions.LOAD_USERS,
-    payload: data,
+    payload: users,
+    // payload: data,
   }
 }
 
@@ -102,6 +109,49 @@ export const updateUserAction = (payload: {
   return {
     type: UserActions.UPDATE_USER,
     payload,
+  }
+}
+
+type PermissionChange = {
+  type: UserActions.PERMISSION_CHANGE
+  payload: {
+    id: string
+    permissionId: number
+    permissionGroupId: number
+  }
+}
+
+export const permissionChangeAction = (payload: {
+  id: string
+  permissionId: number
+  permissionGroupId: number
+}): PermissionChange => {
+  return {
+    type: UserActions.PERMISSION_CHANGE,
+    payload,
+  }
+}
+
+type SuperAdminChange = {
+  type: UserActions.SUPER_ADMIN_CHANGE
+  payload: string
+}
+
+export const superAdminChangeAction = (id: string): SuperAdminChange => {
+  return {
+    type: UserActions.SUPER_ADMIN_CHANGE,
+    payload: id,
+  }
+}
+type SearchTextChange = {
+  type: UserActions.SEARCH_TEXT_CHANGE
+  payload: string
+}
+
+export const searchTextChange = (text: string): SearchTextChange => {
+  return {
+    type: UserActions.SEARCH_TEXT_CHANGE,
+    payload: text,
   }
 }
 

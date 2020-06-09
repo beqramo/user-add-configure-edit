@@ -2,8 +2,10 @@ import React from 'react'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
+
 import {User} from '@types'
+
+import TableSortLabel from '@material-ui/core/TableSortLabel'
 
 interface HeadCell {
   disablePadding: boolean

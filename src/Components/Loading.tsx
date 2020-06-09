@@ -1,7 +1,0 @@
-import React, {ReactElement} from 'react'
-
-const Loading = (): ReactElement => {
-  return <div>loading</div>
-}
-
-export default React.memo(Loading)
